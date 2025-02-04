@@ -1,0 +1,12 @@
+[package]
+name = "aotinductor"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+cxx-build = "1.0.137"
+
+[dependencies]
+cxx = "1.0.137"
+tch = "^0.19.0"
+torch-sys = "^0.19.0"
