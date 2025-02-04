@@ -16,7 +16,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: Download libtorch
+      run: |
+        rm -rf libtorch.zip libtorch/
+        ./scripts/download_libtorch.sh
+        unzip libtorch.zip
     - name: Build
+      env:
+        LIBTORCH: "${{ env.GITHUB_WORKSPACE }}/libtorch"
+        LIBTORCH_INCLUDE: "${{ env.LIBTORCH }}/include"
       run: cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
