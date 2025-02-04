@@ -10,4 +10,4 @@ if [ -z "$TORCH_VER" ]; then
 fi
 
 URL="https://download.pytorch.org/libtorch/cpu/libtorch-cxx11-abi-shared-with-deps-${TORCH_VER}%2Bcpu.zip"
-curl -kLs -o /tmp/libtorch.zip $URL
+curl -kLs -o libtorch.zip $URL
