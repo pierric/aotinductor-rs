@@ -24,7 +24,7 @@ jobs:
     - name: Build
       env:
         LIBTORCH: "${{ env.GITHUB_WORKSPACE }}/libtorch"
-        LIBTORCH_INCLUDE: "${{ env.LIBTORCH }}/include"
-      run: cargo build --verbose
+        LIBTORCH_INCLUDE: "${{ env.GITHUB_WORKSPACE }}/libtorch/include"
+      run: env && cargo build --verbose
     - name: Run tests
       run: cargo test --verbose
