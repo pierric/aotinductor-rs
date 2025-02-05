@@ -16,9 +16,9 @@ fn main() {
 
     let inc_path = std::env::var_os("LIBTORCH_INCLUDE").map(PathBuf::from);
     if inc_path.is_none() {
-        panic!("set env var LIBTORCH_INCLUDE to the path to include folder of torch");
+        panic!("set env var LIBTORCH_INCLUDE to the path to libtorch");
     }
-    let torch_inc_base = inc_path.unwrap();
+    let torch_inc_base = inc_path.unwrap().join("include");
     let torchapi_inc_path = torch_inc_base.join("torch/csrc/api/include");
 
     cxx_build::bridge("src/aoti.rs") // returns a cc::Build

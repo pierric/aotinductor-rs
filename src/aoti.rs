@@ -2,7 +2,7 @@ pub use cxx::{Exception, UniquePtr};
 use std::cell::RefCell;
 
 #[cxx::bridge]
-mod aoti {
+mod aoti_bridge {
 
     // rust::Vec supports only a rust type. There is no direct way to pass
     // Vec<tch::Tensor> through FFI boundary. So we pass the pointers instead.
@@ -39,23 +39,23 @@ mod aoti {
     }
 }
 
-pub struct ModelPackage(RefCell<UniquePtr<aoti::AOTIModelPackageLoader>>);
+pub struct ModelPackage(RefCell<UniquePtr<aoti_bridge::AOTIModelPackageLoader>>);
 
 impl ModelPackage {
     pub fn new(path: &str) -> Result<Self, Exception> {
-        let mp = aoti::aoti_model_package_load(path)?;
+        let mp = aoti_bridge::aoti_model_package_load(path)?;
         Ok(Self(RefCell::new(mp)))
     }
 
     pub fn run(&self, inputs: &Vec<tch::Tensor>) -> Vec<tch::Tensor> {
         let inputs = inputs
             .iter()
-            .map(|t| aoti::TensorPtr {
-                ptr: t.as_ptr() as *const aoti::Tensor,
+            .map(|t| aoti_bridge::TensorPtr {
+                ptr: t.as_ptr() as *const aoti_bridge::Tensor,
             })
             .collect();
 
-        let mut outputs = aoti::aoti_model_package_run(self.0.borrow_mut().pin_mut(), &inputs);
+        let mut outputs = aoti_bridge::aoti_model_package_run(self.0.borrow_mut().pin_mut(), &inputs);
 
         unsafe {
             outputs
