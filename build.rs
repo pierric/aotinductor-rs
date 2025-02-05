@@ -2,6 +2,10 @@ use cxx_build::CFG;
 use std::path::PathBuf;
 
 fn main() {
+    if cfg!(feature = "doc-only") {
+        return;
+    }
+
     let libtorch_path = match std::env::var_os("LIBTORCH").map(PathBuf::from) {
         None => {
             panic!("set env var LIBTORCH to the path to libtorch")
