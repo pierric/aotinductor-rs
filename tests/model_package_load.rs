@@ -12,7 +12,7 @@ mod tests {
     #[test]
     fn test_model_package_load_good() {
         let result = ModelPackage::new("tests/ep1.pt2");
-        assert!(result.is_ok());
+        assert!(result.is_ok(), "{:?}", result.err());
     }
 
     #[test]
@@ -22,8 +22,8 @@ mod tests {
         let loader = result.unwrap();
         let inp = Tensor::rand([1, 32], (tch::Kind::Float, tch::Device::Cpu));
         let out = loader.run(&vec![inp]);
-        assert!(out.len() == 1);
-        assert!(out[0].size() == [1])
+        assert!(out.len() == 1, "outputed {} tensors, expecting 1", out.len());
+        assert!(out[0].size() == [1], "output tensor shape {:?}, expecting [1]", out[0].size())
     }
 
     #[test]
@@ -34,6 +34,6 @@ mod tests {
         let inp1 = Tensor::rand([1, 2], (tch::Kind::Float, tch::Device::Cpu));
         let inp2 = Tensor::rand([1, 4], (tch::Kind::Float, tch::Device::Cpu));
         let out = loader.run(&vec![inp1, inp2]);
-        assert!(out.len() == 2);
+        assert!(out.len() == 2, "output {} tensors, expecting 2", out.len());
     }
 }
