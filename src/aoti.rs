@@ -39,13 +39,31 @@ mod aoti_bridge {
     }
 }
 
+/// Model package for exported pytorch models.
+/// see <https://pytorch.org/docs/main/torch.compiler_aot_inductor.html>
 pub struct ModelPackage(RefCell<UniquePtr<aoti_bridge::AOTIModelPackageLoader>>);
 
 impl ModelPackage {
+    /// load from a pt2 file.
+    ///
+    /// Arguments:
+    ///
+    /// * `path`: Path to a pt2 file.
+    ///
+    /// returns a ModelPackage or an cxx::Exception object when some error occurred.
     pub fn new(path: &str) -> Result<Self, Exception> {
         let mp = aoti_bridge::aoti_model_package_load(path)?;
         Ok(Self(RefCell::new(mp)))
     }
+
+    /// run inference with the model
+    ///
+    /// Arguments:
+    ///
+    /// * `inputs`: List of tensors. The tensors should be all on the same device as the
+    ///     model.
+    ///
+    /// returns a list of tensors.
 
     pub fn run(&self, inputs: &Vec<tch::Tensor>) -> Vec<tch::Tensor> {
         let inputs = inputs
