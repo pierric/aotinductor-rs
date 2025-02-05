@@ -27,3 +27,10 @@ jobs:
         run: env && cargo build --verbose
       - name: Run tests
         run: cargo test --verbose -- --nocapture
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build
+        run: cargo doc --features doc-only
