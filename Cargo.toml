@@ -1,7 +1,15 @@
 [package]
+authors = ["Jiasen Wu <jiasenwu@hotmail.com>"]
 name = "aotinductor"
 version = "0.1.0"
 edition = "2021"
+build = "build.rs"
+license-file = "LICENSE"
+repository = "https://github.com/pierric/aotinductor-rs"
+readme = "README.md"
+categories = ["science"]
+keywords = ["pytorch", "deep-learning", "machine-learning"]
+description = "Rust wrappers for the PyTorch AOTInductor api."
 
 [build-dependencies]
 cxx-build = "1.0.137"
