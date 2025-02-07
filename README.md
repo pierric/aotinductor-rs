@@ -19,9 +19,8 @@ This crate requires the libtorch in the same version as [tch-rs](https://github.
 use aotinductor::ModelPackage;
 use tch::Tensor;
 
-if let Some(model) = ModelPackage::new("path/to/some.pt2") {
-    let inp1 = Tensor::rand([1, 2], (tch::Kind::Float, tch::Device::Cpu));
-    let inp2 = Tensor::rand([1, 4], (tch::Kind::Float, tch::Device::Cpu));
-    let out: std::vec::Vec<Tensor> = loader.run(&vec![inp1, inp2]);
-};
+let model = ModelPackage::new("path/to/some.pt2").expect("model should be loaded");
+let inp1 = Tensor::rand([1, 2], (tch::Kind::Float, tch::Device::Cpu));
+let inp2 = Tensor::rand([1, 4], (tch::Kind::Float, tch::Device::Cpu));
+let out: std::vec::Vec<Tensor> = model.run(&vec![inp1, inp2]);
 ```
